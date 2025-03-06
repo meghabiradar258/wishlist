@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > WishlistController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ecommerce.WishList.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: WishlistController (com.ecommerce.WishList.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WishlistController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.ecommerce.WishList.controller;
+&nbsp;
+&nbsp;import com.ecommerce.WishList.entity.WishList;
+&nbsp;import com.ecommerce.WishList.service.WishlistService;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.data.domain.Page;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/wishlist&quot;)
+<b class="fc">&nbsp;public class WishlistController {</b>
+&nbsp;
+<b class="fc">&nbsp;    private static final Logger logger = LoggerFactory.getLogger(WishlistController.class);</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private WishlistService wishlistService;
+&nbsp;
+&nbsp;    // Fetch Wishlist Items for a User
+&nbsp;    @GetMapping(&quot;/user/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;WishList&gt;&gt; getUserWishlist(
+&nbsp;            @PathVariable Integer userId,
+&nbsp;            @RequestParam(defaultValue = &quot;0&quot;) int page,
+&nbsp;            @RequestParam(defaultValue = &quot;5&quot;) int size) {
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Fetching wishlist for userId: {}, page: {}, size: {}&quot;, userId, page, size);</b>
+&nbsp;
+<b class="fc">&nbsp;        Page&lt;WishList&gt; wishlistPage = wishlistService.getWishlistItems(userId, page, size);</b>
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Successfully fetched wishlist for userId: {}&quot;, userId);</b>
+<b class="fc">&nbsp;        List&lt;WishList&gt; wishlist = wishlistPage.getContent();</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(wishlist);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Add Product to Wishlist
+&nbsp;    @PostMapping(&quot;/add/{userId}/{productId}&quot;)
+&nbsp;    public ResponseEntity&lt;WishList&gt; addToWishlist(@PathVariable Integer userId, @PathVariable Integer productId) {
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Adding productId: {} to wishlist for userId: {}&quot;, productId, userId);</b>
+&nbsp;
+<b class="fc">&nbsp;        WishList wishlistItem = wishlistService.addToWishlist(userId, productId);</b>
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Successfully added productId: {} to wishlist for userId: {}&quot;, productId, userId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(wishlistItem);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Remove Product from Wishlist
+&nbsp;    @DeleteMapping(&quot;/remove/{userId}/{productId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; removeFromWishlist(@PathVariable Integer userId, @PathVariable Integer productId) {
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Removing productId: {} from wishlist for userId: {}&quot;, productId, userId);</b>
+&nbsp;
+<b class="fc">&nbsp;        wishlistService.removeFromWishlist(userId, productId);</b>
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Successfully removed productId: {} from wishlist for userId: {}&quot;, productId, userId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;Product removed from wishlist successfully&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-03-06 14:56</div>
+</div>
+</body>
+</html>
